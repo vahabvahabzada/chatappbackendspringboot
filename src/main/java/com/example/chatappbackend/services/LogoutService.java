@@ -17,6 +17,8 @@ public class LogoutService {
 
     @Autowired
     JwtGenerator jwtGenerator;
+
+
     public void logout(HttpServletRequest request){
         String token=request.getHeader("Authorization").substring(7);
         boolean expired=!(jwtGenerator.validateToken(token));
@@ -24,6 +26,7 @@ public class LogoutService {
             BlackList blackListObj=new BlackList();
             blackListObj.setName(jwtGenerator.getUsernameFromJWT(token));
             blackListObj.setCustomToken(token);
+            blackListObj.setExpireTime(jwtGenerator.getExpTime(token));
             blackListRepo.save(blackListObj);//logout zamani hele vaxti bitmeyen token-lari bir yere yigirig
         }
         System.out.println("########### before logout : authentication = "+SecurityContextHolder.getContext().getAuthentication());

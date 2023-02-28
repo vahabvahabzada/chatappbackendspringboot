@@ -1,5 +1,7 @@
 package com.example.chatappbackend.entities;
 
+import java.util.Date;
+
 //import org.springframework.data.annotation.Id;
 
 import jakarta.persistence.Entity;
@@ -24,4 +26,5 @@ public class BlackList {
 
     private String name;
     private String customToken;
+    private Date expireTime;
 }
