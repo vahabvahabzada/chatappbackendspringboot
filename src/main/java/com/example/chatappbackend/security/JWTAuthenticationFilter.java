@@ -13,16 +13,30 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+import com.example.chatappbackend.repos.BlackListRepo;
+import com.example.chatappbackend.entities.BlackList;
+//import java.util.List;
 public class JWTAuthenticationFilter extends OncePerRequestFilter{
     @Autowired
     private JwtGenerator tokenGenerator;
     @Autowired
     private CustomUserDetailsService customUserDetailsService;
+
+
+    @Autowired
+    private BlackListRepo blackListRepo;
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         //System.out.println("Works");
         String token=getJWTFromRequest(request);
-        if(token!=null && tokenGenerator.validateToken(token)){
+        
+        //Burda token-i yoxlamaliyiq ki logout zamani qalan cache tokendi ya yox,ve butun vaxti kecmis tokenlari legv etmeliyik
+        BlackList deprecatedToken=blackListRepo.findByCustomToken(token);
+        /*if(deprecatedToken!=null){
+            System.out.println("####  "+deprecatedToken.getCustomToken()+"  ####");
+        }*/
+        if(token!=null && tokenGenerator.validateToken(token) && deprecatedToken==null){//cunki deprecated token null olmasa token -i bilen istenilen client proqrami istifade ede biler
             String username=tokenGenerator.getUsernameFromJWT(token);
             UserDetails userDetails=customUserDetailsService.loadUserByUsername(username);
             UsernamePasswordAuthenticationToken authenticationToken=new UsernamePasswordAuthenticationToken(userDetails,null, userDetails.getAuthorities());

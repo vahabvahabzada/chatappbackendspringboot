@@ -44,4 +44,10 @@ public class JwtGenerator {
             throw new AuthenticationCredentialsNotFoundException("JWT was expired or incorrect");
         }
     }
+
+
+    public Date getExpTime(String token){
+        Claims claims=Jwts.parser().setSigningKey(SecurityConstants.JWT_SECRET).parseClaimsJws(token).getBody();
+        return claims.getExpiration();
+    }
 }

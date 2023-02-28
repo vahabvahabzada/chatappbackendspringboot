@@ -28,7 +28,8 @@ public class SignUpService {
         user.setPassword(newUser.getPassword());
 
         if(repo.findByName(newUser.getName())==null){
-            newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));//hashing password
+            //newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));//hashing password
+            user.setPassword(passwordEncoder.encode(newUser.getPassword()));//hashing password
             Role roles=roleRepo.findRoleByName("USER");
             user.setRoles(Collections.singletonList(roles));
             repo.save(user);
