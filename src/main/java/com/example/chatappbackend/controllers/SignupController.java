@@ -11,11 +11,13 @@ import com.example.chatappbackend.services.SignUpService;
 @RestController
 public class SignupController {
     private SignUpService service;
-    public SignupController(SignUpService service){
-        this.service=service;
+
+    public SignupController(SignUpService service) {
+        this.service = service;
     }
+
     @PostMapping("/signup")
-    public String addUserToDB(@RequestBody /*UserEntity newUser*/UserDto newUser){//{client terefden,{"name":"","password":"","token":"","token_exp_time":""} seklinde bir data gelecek}
+    public String addUserToDB(@RequestBody /* UserEntity newUser */UserDto newUser) {// {client terefden,{"name":"","password":"","token":"","token_exp_time":""} seklinde bir data gelecek}
         return service.addUserToDB(newUser);
     }
 }

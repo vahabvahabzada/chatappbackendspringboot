@@ -13,9 +13,10 @@ import com.example.chatappbackend.services.MessageService;
 public class MessageController {
     @Autowired
     private MessageService service;
+
     @PostMapping("/messaging")
-    public void sendMessage(@RequestBody /*Message*/MessageDto mesaj){
+    public void sendMessage(@RequestBody /* Message */MessageDto mesaj) {
         service.sendMessage(mesaj);
-        //return service.chattedBefore(mesaj.getMfrom()+"and"+mesaj.getMto());
+        // return service.chattedBefore(mesaj.getMfrom()+"and"+mesaj.getMto());
     }
 }

@@ -13,6 +13,7 @@ import com.example.chatappbackend.security.JwtGenerator;
 import com.example.chatappbackend.services.PartMsgHisService;
 import com.example.chatappbackend.dtos.MessageDto;
 import jakarta.servlet.http.HttpServletRequest;
+
 @RestController
 public class PartMsgHisController {
     @Autowired
@@ -22,11 +23,12 @@ public class PartMsgHisController {
     private PartMsgHisService service;
 
     @PostMapping("/msgprtlhis")
-    public List</*Message*/MessageDto> getNewMessages(HttpServletRequest request,@RequestBody /*String*/ Kime kime){
-        String username=request.getHeader("Authorization");
-        username=username.substring(7,username.length());// "Bearer tokenValue"
-        username=generator.getUsernameFromJWT(username);
-        //System.out.println(kime);
-        return service.getNewMessages(username,kime.getKime());
+    public List</* Message */MessageDto> getNewMessages(HttpServletRequest request,
+            @RequestBody /* String */ Kime kime) {
+        String username = request.getHeader("Authorization");
+        username = username.substring(7, username.length());// "Bearer tokenValue"
+        username = generator.getUsernameFromJWT(username);
+        // System.out.println(kime);
+        return service.getNewMessages(username, kime.getKime());
     }
 }

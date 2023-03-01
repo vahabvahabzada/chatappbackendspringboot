@@ -15,7 +15,6 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import com.example.chatappbackend.repos.BlackListRepo;
 import com.example.chatappbackend.entities.BlackList;
-//import java.util.List;
 public class JWTAuthenticationFilter extends OncePerRequestFilter{
     @Autowired
     private JwtGenerator tokenGenerator;
@@ -29,6 +28,7 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter{
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         //System.out.println("Works");
+
         String token=getJWTFromRequest(request);
         
         //Burda token-i yoxlamaliyiq ki logout zamani qalan cache tokendi ya yox,ve butun vaxti kecmis tokenlari legv etmeliyik

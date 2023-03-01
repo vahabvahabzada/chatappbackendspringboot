@@ -23,13 +23,14 @@ public class MsgHisController {
     @Autowired
     private MsgHisService service;
 
-    @PostMapping(value="/msghis")
-    public List</*Message*/MessageDto> /*MesgBox*/ getMesgHistory(HttpServletRequest request,@RequestBody String kime) {
-        String username=request.getHeader("Authorization");
-        username=username.substring(7);//"Bearer "
-        username=jwtGenerator.getUsernameFromJWT(username);
-        //return "Hello "+username;
+    @PostMapping("/msghis")
+    public List</* Message */MessageDto> /* MesgBox */ getMesgHistory(HttpServletRequest request,
+            @RequestBody String kime) {
+        String username = request.getHeader("Authorization");
+        username = username.substring(7);// "Bearer "
+        username = jwtGenerator.getUsernameFromJWT(username);
+        // return "Hello "+username;
         return service.getMesgHistory(username, kime);
     }
-    
+
 }

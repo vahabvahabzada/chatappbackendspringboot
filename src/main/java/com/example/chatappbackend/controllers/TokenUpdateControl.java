@@ -16,7 +16,7 @@ public class TokenUpdateControl {
     private TokenUpdateService service;
 
     @GetMapping("/updatetoken")
-    public ResponseEntity<Token> updateToken(){
+    public ResponseEntity<Token> updateToken() {
         return service.updateToken();
     }
 }
