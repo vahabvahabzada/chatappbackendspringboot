@@ -1,4 +1,4 @@
-package com.example.chatappbackend.entities;
+package com.example.chatappbackend.dtos;
 
 import lombok.Data;
 

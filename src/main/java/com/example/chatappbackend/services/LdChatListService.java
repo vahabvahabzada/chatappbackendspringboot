@@ -16,7 +16,7 @@ public class LdChatListService {
     private LdChatListRepo ldChatListRepo;
 
     public List</*Message*/MessageDto> getChatList(String currentUserName){
-        if(ldChatListRepo.getAllByLikeCoupleName(currentUserName+"and")!=null){
+        if(ldChatListRepo.getAllByLikeCoupleName(currentUserName+"and").size()!=0/*!=null*/){
             List<Long> mesgBoxItems=ldChatListRepo.getAllByLikeCoupleName(currentUserName+"and");
             //List<Long> mesgBoxIds;
             List<Message> messagePreviews=new ArrayList<>();
@@ -28,7 +28,7 @@ public class LdChatListService {
             List<MessageDto> msgPreviewDtos=messagePreviews.stream().map(m->mapToDto(m)).collect(Collectors.toList());
             return msgPreviewDtos;
         }
-        if(ldChatListRepo.getAllByLikeCoupleName("and"+currentUserName)!=null){
+        if(ldChatListRepo.getAllByLikeCoupleName("and"+currentUserName).size()!=0/*!=null*/){
             List<Long> mesgBoxItems=ldChatListRepo.getAllByLikeCoupleName("and"+currentUserName);
             List<Message> messagePreviews=new ArrayList<>();
             System.out.println(mesgBoxItems);

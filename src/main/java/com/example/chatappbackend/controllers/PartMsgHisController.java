@@ -7,10 +7,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.chatappbackend.entities.Kime;
 //import com.example.chatappbackend.entities.Message;
 import com.example.chatappbackend.security.JwtGenerator;
 import com.example.chatappbackend.services.PartMsgHisService;
+import com.example.chatappbackend.dtos.Kime;
 import com.example.chatappbackend.dtos.MessageDto;
 import jakarta.servlet.http.HttpServletRequest;
 
