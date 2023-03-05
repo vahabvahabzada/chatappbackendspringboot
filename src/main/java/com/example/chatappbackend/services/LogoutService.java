@@ -13,10 +13,10 @@ import jakarta.servlet.http.HttpServletRequest;
 @Service
 public class LogoutService {
     @Autowired
-    BlackListRepo blackListRepo;
+    private BlackListRepo blackListRepo;
 
     @Autowired
-    JwtGenerator jwtGenerator;
+    private JwtGenerator jwtGenerator;
 
 
     public void logout(HttpServletRequest request){

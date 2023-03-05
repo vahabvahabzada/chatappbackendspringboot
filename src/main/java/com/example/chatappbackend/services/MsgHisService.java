@@ -10,32 +10,33 @@ import com.example.chatappbackend.repos.MesgBoxRepo;
 import com.example.chatappbackend.repos.MsgHisRepo;
 import com.example.chatappbackend.entities.Message;
 import com.example.chatappbackend.dtos.MessageDto;
+
 @Service
 public class MsgHisService {
     @Autowired
     private MesgBoxRepo mesgBoxRepo;
-    
+
     @Autowired
     private MsgHisRepo msgHisRepo;
 
-    public List</*Message*/MessageDto>/*MesgBox*/ getMesgHistory(String kimden,String kime){
-        if(mesgBoxRepo.findByMesgCouple(kimden+"and"+kime)!=null){
-            Long mesgBoxId=mesgBoxRepo.findByMesgCouple(kimden+"and"+kime).getMesg_box_id();
-            List<Message> mesajlar=msgHisRepo.findByMesgId(mesgBoxId);
-            List<MessageDto> mesgDtos = mesajlar.stream().map(m->mapToDto(m)).collect(Collectors.toList());
+    public List<MessageDto> getMesgHistory(String kimden, String kime) {
+        if (mesgBoxRepo.findByMesgCouple(kimden + "and" + kime) != null) {
+            Long mesgBoxId = mesgBoxRepo.findByMesgCouple(kimden + "and" + kime).getMesg_box_id();
+            List<Message> mesajlar = msgHisRepo.findByMesgId(mesgBoxId);
+            List<MessageDto> mesgDtos = mesajlar.stream().map(m -> mapToDto(m)).collect(Collectors.toList());
             return mesgDtos;
         }
-        if(mesgBoxRepo.findByMesgCouple(kime+"and"+kimden)!=null){
-            Long mesgBoxId=mesgBoxRepo.findByMesgCouple(kime+"and"+kimden).getMesg_box_id();
-            List<Message> mesajlar=msgHisRepo.findByMesgId(mesgBoxId);
-            List<MessageDto> mesgDtos=mesajlar.stream().map(msg->mapToDto(msg)).collect(Collectors.toList());
+        if (mesgBoxRepo.findByMesgCouple(kime + "and" + kimden) != null) {
+            Long mesgBoxId = mesgBoxRepo.findByMesgCouple(kime + "and" + kimden).getMesg_box_id();
+            List<Message> mesajlar = msgHisRepo.findByMesgId(mesgBoxId);
+            List<MessageDto> mesgDtos = mesajlar.stream().map(msg -> mapToDto(msg)).collect(Collectors.toList());
             return mesgDtos;
         }
-        return null; //hec yazismayiblar
+        return null; // hec yazismayiblar
     }
 
-    public MessageDto mapToDto(Message mesaj){
-        MessageDto messageDto=new MessageDto();
+    public MessageDto mapToDto(Message mesaj) {
+        MessageDto messageDto = new MessageDto();
         messageDto.setMfrom(mesaj.getMfrom());
         messageDto.setMbody(mesaj.getMbody());
         messageDto.setMto(mesaj.getMto());

@@ -1,6 +1,5 @@
 package com.example.chatappbackend.security;
 
-
 import java.util.Date;
 
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
@@ -13,41 +12,40 @@ import io.jsonwebtoken.SignatureAlgorithm;
 
 @Component
 public class JwtGenerator {
-    public String tokenGenerateEle(Authentication authentication){
-        String username=authentication.getName();
-        Date currentDate=new Date();
-        Date expireDate=new Date(currentDate.getTime()+SecurityConstants.JWT_EXPIRATION);
+    public String tokenGenerateEle(Authentication authentication) {
+        String username = authentication.getName();
+        Date currentDate = new Date();
+        Date expireDate = new Date(currentDate.getTime() + SecurityConstants.JWT_EXPIRATION);
 
-        String token=Jwts.builder()
-        .setSubject(username)
-        .setIssuedAt(new Date()) //current date
-        .setExpiration(expireDate) //expire date
-        .signWith(SignatureAlgorithm.HS512, SecurityConstants.JWT_SECRET)
-        .compact();
+        String token = Jwts.builder()
+                .setSubject(username)
+                .setIssuedAt(new Date()) // current date
+                .setExpiration(expireDate) // expire date
+                .signWith(SignatureAlgorithm.HS512, SecurityConstants.JWT_SECRET)
+                .compact();
 
         return token;
     }
 
-    public String getUsernameFromJWT(String token){
-        Claims claims=Jwts.parser()
-        .setSigningKey(SecurityConstants.JWT_SECRET)
-        .parseClaimsJws(token)
-        .getBody();
+    public String getUsernameFromJWT(String token) {
+        Claims claims = Jwts.parser()
+                .setSigningKey(SecurityConstants.JWT_SECRET)
+                .parseClaimsJws(token)
+                .getBody();
         return claims.getSubject();
     }
 
-    public boolean validateToken(String token){
-        try{
+    public boolean validateToken(String token) {
+        try {
             Jwts.parser().setSigningKey(SecurityConstants.JWT_SECRET).parseClaimsJws(token);
             return true;
-        }catch(Exception ex){
+        } catch (Exception ex) {
             throw new AuthenticationCredentialsNotFoundException("JWT was expired or incorrect");
         }
     }
 
-
-    public Date getExpTime(String token){
-        Claims claims=Jwts.parser().setSigningKey(SecurityConstants.JWT_SECRET).parseClaimsJws(token).getBody();
+    public Date getExpTime(String token) {
+        Claims claims = Jwts.parser().setSigningKey(SecurityConstants.JWT_SECRET).parseClaimsJws(token).getBody();
         return claims.getExpiration();
     }
 }

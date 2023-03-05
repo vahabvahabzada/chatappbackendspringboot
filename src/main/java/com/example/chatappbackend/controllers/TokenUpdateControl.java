@@ -8,8 +8,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.chatappbackend.security.Token;
 import com.example.chatappbackend.services.TokenUpdateService;
 
-//import jakarta.servlet.http.HttpServletRequest;
-
 @RestController
 public class TokenUpdateControl {
     @Autowired

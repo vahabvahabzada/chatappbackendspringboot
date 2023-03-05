@@ -19,6 +19,7 @@ import com.example.chatappbackend.repos.UserRepo;
 public class CustomUserDetailsService implements UserDetailsService{
     @Autowired
     private UserRepo repoLogin;
+    
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException{
         UserEntity user=repoLogin.findByName(username);

@@ -3,7 +3,7 @@ package com.example.chatappbackend.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
+//import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -12,21 +12,20 @@ import com.example.chatappbackend.security.CustomUserDetailsService;
 import com.example.chatappbackend.security.JwtGenerator;
 import com.example.chatappbackend.security.Token;
 
-//import jakarta.servlet.http.HttpServletRequest;
 @Service
 public class TokenUpdateService {
     @Autowired
     private JwtGenerator jwtGenerator;
 
-    @Autowired
-    AuthenticationManager authenticationManager;
+    // @Autowired
+    // AuthenticationManager authenticationManager;
 
     @Autowired
     CustomUserDetailsService userDetailsService;
 
-    public ResponseEntity<Token> updateToken(){
-        Authentication authentication=SecurityContextHolder.getContext().getAuthentication();
-        String newToken=jwtGenerator.tokenGenerateEle(authentication);
-        return new ResponseEntity<Token>(new Token(newToken),HttpStatus.OK);
+    public ResponseEntity<Token> updateToken() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String newToken = jwtGenerator.tokenGenerateEle(authentication);
+        return new ResponseEntity<Token>(new Token(newToken), HttpStatus.OK);
     }
 }

@@ -7,7 +7,6 @@ import com.example.chatappbackend.services.LogoutService;
 import jakarta.servlet.http.HttpServletRequest;
 
 @RestController
-// @CrossOrigin(origins = "http://localhost:5500",allowedHeaders = "*")
 public class LogoutController {
     @Autowired
     private LogoutService service;

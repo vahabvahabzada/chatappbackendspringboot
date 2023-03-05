@@ -23,12 +23,10 @@ public class PartMsgHisController {
     private PartMsgHisService service;
 
     @PostMapping("/msgprtlhis")
-    public List</* Message */MessageDto> getNewMessages(HttpServletRequest request,
-            @RequestBody /* String */ Kime kime) {
+    public List<MessageDto> getNewMessages(HttpServletRequest request,@RequestBody /* String */ Kime kime) {
         String username = request.getHeader("Authorization");
         username = username.substring(7, username.length());// "Bearer tokenValue"
         username = generator.getUsernameFromJWT(username);
-        // System.out.println(kime);
         return service.getNewMessages(username, kime.getKime());
     }
 }

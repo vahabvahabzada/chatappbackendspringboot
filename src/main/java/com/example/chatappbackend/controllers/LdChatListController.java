@@ -6,8 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-//import com.example.chatappbackend.entities.MesgBox;
-//import com.example.chatappbackend.entities.Message;
 import jakarta.servlet.http.HttpServletRequest;
 import com.example.chatappbackend.security.JwtGenerator;
 import com.example.chatappbackend.services.LdChatListService;
@@ -22,7 +20,7 @@ public class LdChatListController {
     private LdChatListService ldChatListService;
 
     @PostMapping("/ldchatlist")
-    public List</* Message */MessageDto> getChatList(HttpServletRequest request) {
+    public List<MessageDto> getChatList(HttpServletRequest request) {
         String username = request.getHeader("Authorization");
         username = username.substring(7, username.length());// "Bearer tokenValue"
         username = tokenGenerator.getUsernameFromJWT(username);

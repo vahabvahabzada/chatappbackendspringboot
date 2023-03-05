@@ -12,7 +12,7 @@ public class SearchService {
     @Autowired
     private SearchRepo repo;
 
-    public List<String> istifadeciAxtar(String searchText){
+    public List<String> istifadeciAxtar(String searchText) {
         System.out.println(searchText);
         return repo.istifadeciAxtar(searchText);
     }
