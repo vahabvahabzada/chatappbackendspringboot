@@ -14,6 +14,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import jakarta.persistence.Table;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 @Entity
 @Data
 @Table(name="blacklist")
@@ -27,4 +29,8 @@ public class BlackList {
     private String name;
     private String customToken;
     private Date expireTime;
+
+    @ManyToOne
+    @JoinColumn(name = "userid")
+    private UserEntity user;
 }

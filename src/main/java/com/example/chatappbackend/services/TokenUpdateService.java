@@ -8,7 +8,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import com.example.chatappbackend.security.CustomUserDetailsService;
 import com.example.chatappbackend.security.JwtGenerator;
 import com.example.chatappbackend.security.Token;
 
@@ -16,12 +15,6 @@ import com.example.chatappbackend.security.Token;
 public class TokenUpdateService {
     @Autowired
     private JwtGenerator jwtGenerator;
-
-    // @Autowired
-    // AuthenticationManager authenticationManager;
-
-    @Autowired
-    CustomUserDetailsService userDetailsService;
 
     public ResponseEntity<Token> updateToken() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

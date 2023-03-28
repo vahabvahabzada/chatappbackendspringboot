@@ -22,15 +22,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 public class SecurityConfig {
     @Autowired
     private JwtAuthEntryPoint jwtAuthEntryPoint;
-
-    // private CustomUserDetailsService userDetailsService;
-
-    /*
-     * public SecurityConfig(CustomUserDetailsService userDetailsService){
-     * this.userDetailsService=userDetailsService;
-     * }
-     */
-
+    
     @Bean
     public CorsFilter corsFilter() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
