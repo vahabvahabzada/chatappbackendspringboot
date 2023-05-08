@@ -1,6 +1,5 @@
 package com.example.chatappbackend.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -12,8 +11,10 @@ import com.example.chatappbackend.security.Token;
 
 @RestController
 public class LoginController {
-    @Autowired
-    private LoginService service;
+    private final  LoginService service;
+    public LoginController(LoginService service){
+        this.service=service;
+    }
 
     @PostMapping("/auth")
     public ResponseEntity<Token> login(@RequestBody UserDto user) {

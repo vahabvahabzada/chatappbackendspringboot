@@ -2,7 +2,6 @@ package com.example.chatappbackend.controllers;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -13,11 +12,12 @@ import com.example.chatappbackend.dtos.MessageDto;
 
 @RestController
 public class LdChatListController {
-    @Autowired
     private JwtGenerator tokenGenerator;
-
-    @Autowired
-    private LdChatListService ldChatListService;
+    private final LdChatListService ldChatListService;
+    public LdChatListController(JwtGenerator jwtGenerator,LdChatListService ldChatListService){
+        this.tokenGenerator=jwtGenerator;
+        this.ldChatListService=ldChatListService;
+    }
 
     @PostMapping("/ldchatlist")
     public List<MessageDto> getChatList(HttpServletRequest request) {

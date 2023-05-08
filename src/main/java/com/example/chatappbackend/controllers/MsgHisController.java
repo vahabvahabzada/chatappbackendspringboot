@@ -10,18 +10,18 @@ import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import com.example.chatappbackend.services.MsgHisService;
 
 @RestController
 public class MsgHisController {
-    @Autowired
     private JwtGenerator jwtGenerator;
-
-    @Autowired
-    private MsgHisService service;
+    private final MsgHisService service;
+    public MsgHisController(JwtGenerator jwtGenerator,MsgHisService service){
+        this.jwtGenerator=jwtGenerator;
+        this.service=service;
+    }
 
     @PostMapping("/msghis")
     public List<MessageDto> getMesgHistory(HttpServletRequest request, @RequestBody String kime) {

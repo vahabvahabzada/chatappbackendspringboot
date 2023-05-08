@@ -2,7 +2,6 @@ package com.example.chatappbackend.controllers;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,11 +15,11 @@ import jakarta.servlet.http.HttpServletRequest;
 
 @RestController
 public class PartMsgHisController {
-    @Autowired
     private JwtGenerator generator;
-
-    @Autowired
-    private PartMsgHisService service;
+    private final PartMsgHisService service;
+    public PartMsgHisController(PartMsgHisService service){
+        this.service=service;
+    }
 
     @PostMapping("/msgprtlhis")
     public List<MessageDto> getNewMessages(HttpServletRequest request,@RequestBody /* String */ Kime kime) {
