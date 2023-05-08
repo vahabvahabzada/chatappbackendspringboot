@@ -1,6 +1,5 @@
 package com.example.chatappbackend.services;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
@@ -13,14 +12,14 @@ import jakarta.servlet.http.HttpServletRequest;
 
 @Service
 public class LogoutService {
-    @Autowired
-    private BlackListRepo blackListRepo;
-
-    @Autowired
+    private final BlackListRepo blackListRepo;
     private JwtGenerator jwtGenerator;
-
-    @Autowired
-    private UserRepo userRepo;
+    private final UserRepo userRepo;
+    public LogoutService(BlackListRepo blackListRepo,JwtGenerator jwtGenerator,UserRepo userRepo){
+        this.blackListRepo=blackListRepo;
+        this.jwtGenerator=jwtGenerator;
+        this.userRepo=userRepo;
+    }
 
     public void logout(HttpServletRequest request) {
         String token = request.getHeader("Authorization").substring(7);

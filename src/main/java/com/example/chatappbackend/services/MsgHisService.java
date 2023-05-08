@@ -3,7 +3,6 @@ package com.example.chatappbackend.services;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.chatappbackend.repos.MesgBoxRepo;
@@ -13,11 +12,12 @@ import com.example.chatappbackend.dtos.MessageDto;
 
 @Service
 public class MsgHisService {
-    @Autowired
     private MesgBoxRepo mesgBoxRepo;
-
-    @Autowired
     private MsgHisRepo msgHisRepo;
+    public MsgHisService(MesgBoxRepo mesgBoxRepo,MsgHisRepo msgHisRepo){
+        this.mesgBoxRepo=mesgBoxRepo;
+        this.msgHisRepo=msgHisRepo;
+    }
 
     public List<MessageDto> getMesgHistory(String kimden, String kime) {
         if (mesgBoxRepo.findByMesgCouple(kimden + "and" + kime) != null) {

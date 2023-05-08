@@ -2,7 +2,6 @@ package com.example.chatappbackend.services;
 
 import java.util.Collections;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.chatappbackend.dtos.MessageDto;
@@ -13,11 +12,12 @@ import com.example.chatappbackend.repos.MessageRepo;
 
 @Service
 public class MessageService {
-    @Autowired
-    private MessageRepo messageRepo;
-
-    @Autowired
-    private MesgBoxRepo mesgBoxRepo;
+    private final MessageRepo messageRepo;
+    private final MesgBoxRepo mesgBoxRepo;
+    public MessageService(MessageRepo messageRepo,MesgBoxRepo mesgBoxRepo){
+        this.messageRepo=messageRepo;
+        this.mesgBoxRepo=mesgBoxRepo;
+    }
 
     public void sendMessage(MessageDto mesaj) {
         Message message = new Message();

@@ -1,6 +1,5 @@
 package com.example.chatappbackend.services;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.example.chatappbackend.repos.MesgBoxRepo;
 import com.example.chatappbackend.repos.PartMsgHisRepo;
@@ -10,11 +9,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 @Service
 public class PartMsgHisService {
-    @Autowired
-    private MesgBoxRepo mesgBoxRepo;
-
-    @Autowired
-    private PartMsgHisRepo partMsgHisRepo;
+    private final MesgBoxRepo mesgBoxRepo;
+    private final PartMsgHisRepo partMsgHisRepo;
+    public PartMsgHisService(MesgBoxRepo mesgBoxRepo,PartMsgHisRepo partMsgHisRepo){
+        this.mesgBoxRepo=mesgBoxRepo;
+        this.partMsgHisRepo=partMsgHisRepo;
+    }
 
     public List</*Message*/MessageDto> getNewMessages(String kimden,String kime){
         if(mesgBoxRepo.findByMesgCouple(kime+"and"+kimden)!=null){

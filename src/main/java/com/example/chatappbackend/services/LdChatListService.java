@@ -3,7 +3,6 @@ package com.example.chatappbackend.services;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.ArrayList;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.chatappbackend.repos.LdChatListRepo;
@@ -12,8 +11,10 @@ import com.example.chatappbackend.dtos.MessageDto;
 
 @Service
 public class LdChatListService {
-    @Autowired
-    private LdChatListRepo ldChatListRepo;
+    private final LdChatListRepo ldChatListRepo;
+    public LdChatListService(LdChatListRepo repo){
+        this.ldChatListRepo=repo;
+    }
 
     public List<MessageDto> getChatList(String currentUserName) {
         if (ldChatListRepo.getAllByLikeCoupleName(currentUserName + "and").size() != 0/* !=null */) {

@@ -1,6 +1,5 @@
 package com.example.chatappbackend.services;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -15,10 +14,12 @@ import com.example.chatappbackend.security.Token;
 
 @Service
 public class LoginService {
-    @Autowired
-    private AuthenticationManager authenticationManager;
-    @Autowired
+    private final AuthenticationManager authenticationManager;
     private JwtGenerator jwtGenerator;
+    public LoginService(AuthenticationManager authenticationManager,JwtGenerator jwtGenerator){
+        this.authenticationManager=authenticationManager;
+        this.jwtGenerator=jwtGenerator;
+    }
 
     public ResponseEntity<Token> login(UserDto user) {
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getName(), user.getPassword()));// sanki bu metod gedir database-i axtarir ve eger bele bir cut varsa login-i icra edir

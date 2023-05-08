@@ -2,7 +2,6 @@ package com.example.chatappbackend.services;
 
 import java.util.Collections;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -14,14 +13,14 @@ import com.example.chatappbackend.repos.RoleRepo;
 
 @Service
 public class SignUpService {
-    @Autowired
     private PasswordEncoder passwordEncoder;
-
-    @Autowired
-    private RoleRepo roleRepo;
-
-    @Autowired
-    private SignUpRepo repo;
+    private final RoleRepo roleRepo;
+    private final SignUpRepo repo;
+    public SignUpService(RoleRepo roleRepo,SignUpRepo signUpRepo,PasswordEncoder passwordEncoder){
+        this.roleRepo=roleRepo;
+        this.repo=signUpRepo;
+        this.passwordEncoder=passwordEncoder;
+    }
 
     public String addUserToDB(UserDto newUser) {
         UserEntity user = new UserEntity();
