@@ -2,7 +2,8 @@ package com.example.chatappbackend.security;
 
 import org.springframework.web.filter.CorsFilter;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.chatappbackend.repos.BlackListRepo;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -20,9 +21,19 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-    @Autowired
     private JwtAuthEntryPoint jwtAuthEntryPoint;
+
+    private JwtGenerator tokenGenerator;
+    private final CustomUserDetailsService customUserDetailsService;
+    private final BlackListRepo blackListRepo;
     
+    public SecurityConfig(JwtAuthEntryPoint jwtAuthEntryPoint,JwtGenerator jwtGenerator,CustomUserDetailsService service,BlackListRepo blackListRepo){
+        this.jwtAuthEntryPoint=jwtAuthEntryPoint;
+        this.tokenGenerator=jwtGenerator;
+        this.customUserDetailsService=service;
+        this.blackListRepo=blackListRepo;
+    }
+
     @Bean
     public CorsFilter corsFilter() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
@@ -76,6 +87,6 @@ public class SecurityConfig {
 
     @Bean
     public JWTAuthenticationFilter jwtAuthenticationFilter() {
-        return new JWTAuthenticationFilter();
+        return new JWTAuthenticationFilter(tokenGenerator,customUserDetailsService,blackListRepo);
     }
 }

@@ -4,7 +4,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,9 +16,11 @@ import com.example.chatappbackend.entities.UserEntity;
 import com.example.chatappbackend.repos.UserRepo;
 @Service
 public class CustomUserDetailsService implements UserDetailsService{
-    @Autowired
-    private UserRepo repoLogin;
-    
+    private final UserRepo repoLogin;
+    public CustomUserDetailsService(UserRepo userRepo){
+        this.repoLogin=userRepo;
+    }
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException{
         UserEntity user=repoLogin.findByName(username);

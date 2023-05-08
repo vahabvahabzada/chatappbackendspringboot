@@ -1,7 +1,6 @@
 package com.example.chatappbackend.security;
 import java.io.IOException;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,14 +15,14 @@ import jakarta.servlet.http.HttpServletResponse;
 import com.example.chatappbackend.repos.BlackListRepo;
 import com.example.chatappbackend.entities.BlackList;
 public class JWTAuthenticationFilter extends OncePerRequestFilter{
-    @Autowired
     private JwtGenerator tokenGenerator;
-    @Autowired
-    private CustomUserDetailsService customUserDetailsService;
-
-
-    @Autowired
-    private BlackListRepo blackListRepo;
+    private final CustomUserDetailsService customUserDetailsService;
+    private final BlackListRepo blackListRepo;
+    public JWTAuthenticationFilter(JwtGenerator generator,CustomUserDetailsService customUserDetailsService,BlackListRepo repo){
+        this.tokenGenerator=generator;
+        this.customUserDetailsService=customUserDetailsService;
+        this.blackListRepo=repo;
+    }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
