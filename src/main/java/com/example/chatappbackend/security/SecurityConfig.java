@@ -10,7 +10,9 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+//import org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -21,14 +23,13 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-    private JwtAuthEntryPoint jwtAuthEntryPoint;
-
+    
     private JwtGenerator tokenGenerator;
-    private final CustomUserDetailsService customUserDetailsService;
+    private final UserDetailsService customUserDetailsService;
     private final BlackListRepo blackListRepo;
     
-    public SecurityConfig(JwtAuthEntryPoint jwtAuthEntryPoint,JwtGenerator jwtGenerator,CustomUserDetailsService service,BlackListRepo blackListRepo){
-        this.jwtAuthEntryPoint=jwtAuthEntryPoint;
+
+    public SecurityConfig(JwtGenerator jwtGenerator,UserDetailsService service,BlackListRepo blackListRepo){
         this.tokenGenerator=jwtGenerator;
         this.customUserDetailsService=service;
         this.blackListRepo=blackListRepo;
@@ -59,7 +60,6 @@ public class SecurityConfig {
                 .and()
                 .csrf().disable()
                 .exceptionHandling()
-                .authenticationEntryPoint(jwtAuthEntryPoint)
                 .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
@@ -89,4 +89,6 @@ public class SecurityConfig {
     public JWTAuthenticationFilter jwtAuthenticationFilter() {
         return new JWTAuthenticationFilter(tokenGenerator,customUserDetailsService,blackListRepo);
     }
+
+    // WebSecurityConfiguration --> CTRL+click
 }

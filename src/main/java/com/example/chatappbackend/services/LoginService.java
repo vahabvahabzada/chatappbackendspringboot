@@ -22,9 +22,9 @@ public class LoginService {
     }
 
     public ResponseEntity<Token> login(UserDto user) {
-        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getName(), user.getPassword()));// sanki bu metod gedir database-i axtarir ve eger bele bir cut varsa login-i icra edir
+        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getName(), user.getPassword()));
         System.out.println(authentication);
-        SecurityContextHolder.getContext().setAuthentication(authentication); // yuxaridaki ile check edirik,username ve password duzdurse,bu setir de icra olunur ve davam edir
+        SecurityContextHolder.getContext().setAuthentication(authentication);
         String token = jwtGenerator.tokenGenerateEle(authentication);
         return new ResponseEntity<Token>(new Token(token), HttpStatus.OK);
     }
