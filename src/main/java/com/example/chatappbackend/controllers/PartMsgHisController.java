@@ -17,8 +17,9 @@ import jakarta.servlet.http.HttpServletRequest;
 public class PartMsgHisController {
     private JwtGenerator generator;
     private final PartMsgHisService service;
-    public PartMsgHisController(PartMsgHisService service){
+    public PartMsgHisController(PartMsgHisService service,JwtGenerator generator){
         this.service=service;
+        this.generator=generator;
     }
 
     @PostMapping("/msgprtlhis")

@@ -1,40 +1,29 @@
 package com.example.chatappbackend.services;
 
 import org.springframework.stereotype.Service;
-import com.example.chatappbackend.repos.MesgBoxRepo;
 import com.example.chatappbackend.repos.PartMsgHisRepo;
 import com.example.chatappbackend.entities.Message;
 import com.example.chatappbackend.dtos.MessageDto;
+
+import java.util.LinkedList;
 import java.util.List;
-import java.util.stream.Collectors;
 @Service
 public class PartMsgHisService {
-    private final MesgBoxRepo mesgBoxRepo;
     private final PartMsgHisRepo partMsgHisRepo;
-    public PartMsgHisService(MesgBoxRepo mesgBoxRepo,PartMsgHisRepo partMsgHisRepo){
-        this.mesgBoxRepo=mesgBoxRepo;
+    public PartMsgHisService(PartMsgHisRepo partMsgHisRepo){
         this.partMsgHisRepo=partMsgHisRepo;
     }
 
-    public List</*Message*/MessageDto> getNewMessages(String kimden,String kime){
-        if(mesgBoxRepo.findByMesgCouple(kime+"and"+kimden)!=null){
-            Long mesgBoxId=mesgBoxRepo.findByMesgCouple(kime+"and"+kimden).getMesg_box_id();
-            System.out.println(mesgBoxId);
-            List<Message> mesajlar=partMsgHisRepo.getLatestMessages(mesgBoxId);
-            List<MessageDto> msgdtos=mesajlar.stream().map(m->mapToDto(m)).collect(Collectors.toList());
-            return msgdtos;
+    public List<MessageDto> getNewMessages(String kimden,String kime){
+        List<Message> messages=partMsgHisRepo.getLatestMessages(kimden, kime);
+        List<MessageDto> res=new LinkedList<>();
+        for(Message message:messages){
+            res.add(entityToDto(message));
         }
-        if(mesgBoxRepo.findByMesgCouple(kimden+"and"+kime)!=null){
-            Long mesgBoxId=mesgBoxRepo.findByMesgCouple(kimden+"and"+kime).getMesg_box_id();
-            List<Message> mesajar=partMsgHisRepo.getLatestMessages(mesgBoxId);
-            List<MessageDto> msgdtos=mesajar.stream().map(m->mapToDto(m)).collect(Collectors.toList());
-            System.out.println(mesgBoxId);
-            return msgdtos;
-        }
-        return null;//hec yazismayiblar
+        return res;
     }
 
-    public MessageDto mapToDto(Message mesaj){
+    public MessageDto entityToDto(Message mesaj){
         MessageDto mesgDto=new MessageDto();
         mesgDto.setMfrom(mesaj.getMfrom());
         mesgDto.setMbody(mesaj.getMbody());

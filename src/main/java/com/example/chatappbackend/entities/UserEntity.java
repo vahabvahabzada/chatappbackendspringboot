@@ -3,6 +3,7 @@ package com.example.chatappbackend.entities;
 import java.util.ArrayList;
 import java.util.List;
 
+
 import jakarta.persistence.Entity;
 
 import jakarta.persistence.GeneratedValue;
@@ -37,4 +38,7 @@ public class UserEntity {
     
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
     private List<BlackList> blackList=new ArrayList<>();
+
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
+    private List<Message> messages=new ArrayList<>();
 }
