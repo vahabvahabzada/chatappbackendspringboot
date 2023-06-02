@@ -19,25 +19,9 @@ public class LdChatListService {
     public List<MessageDto> getChatList(String currentUserName) {
         List<String> boxMans=ldChatListRepo.getBoxMans(currentUserName);
         List<MessageDto> chatList=new LinkedList<>();
-        Message temp1,temp2;
+        
         for(String targetUserName:boxMans){
-            temp1=ldChatListRepo.getLatestMessage(currentUserName, targetUserName);
-            temp2=ldChatListRepo.getLatestMessage(targetUserName, currentUserName);
-            if(temp1==null){
-                chatList.add(entityToDto(temp2));
-                continue;
-            }
-            if(temp2==null){
-                chatList.add(entityToDto(temp1));
-                continue;
-            }
-
-            if(temp1.getMesgId()>temp2.getMesgId()){
-                chatList.add(entityToDto(temp1));
-            }
-            if(temp1.getMesgId()<temp2.getMesgId()){
-                chatList.add(entityToDto(temp2));
-            }
+            chatList.add(entityToDto(ldChatListRepo.getLatestMessage(currentUserName, targetUserName)));
         }
         return chatList;
     }
