@@ -1,8 +1,8 @@
 package com.example.chatappbackend.services;
 
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.ArrayList;
+import java.util.LinkedList;
+
 import org.springframework.stereotype.Service;
 
 import com.example.chatappbackend.repos.LdChatListRepo;
@@ -17,35 +17,32 @@ public class LdChatListService {
     }
 
     public List<MessageDto> getChatList(String currentUserName) {
-        if (ldChatListRepo.getAllByLikeCoupleName(currentUserName + "and").size() != 0/* !=null */) {
-            List<Long> mesgBoxItems = ldChatListRepo.getAllByLikeCoupleName(currentUserName + "and");
+        List<String> boxMans=ldChatListRepo.getBoxMans(currentUserName);
+        List<MessageDto> chatList=new LinkedList<>();
+        Message temp1,temp2;
+        for(String targetUserName:boxMans){
+            temp1=ldChatListRepo.getLatestMessage(currentUserName, targetUserName);
+            temp2=ldChatListRepo.getLatestMessage(targetUserName, currentUserName);
+            if(temp1==null){
+                chatList.add(entityToDto(temp2));
+                continue;
+            }
+            if(temp2==null){
+                chatList.add(entityToDto(temp1));
+                continue;
+            }
 
-            List<Message> messagePreviews = new ArrayList<>();
-            System.out.println(mesgBoxItems);
-            for (int i = 0; i < mesgBoxItems.size(); i++) {
-                System.out.println("inside loop");
-                messagePreviews.add(ldChatListRepo.getLatestMessage(mesgBoxItems.get(i)));
+            if(temp1.getMesgId()>temp2.getMesgId()){
+                chatList.add(entityToDto(temp1));
             }
-            List<MessageDto> msgPreviewDtos = messagePreviews.stream().map(m -> mapToDto(m))
-                    .collect(Collectors.toList());
-            return msgPreviewDtos;
-        }
-        if (ldChatListRepo.getAllByLikeCoupleName("and" + currentUserName).size() != 0/* !=null */) {
-            List<Long> mesgBoxItems = ldChatListRepo.getAllByLikeCoupleName("and" + currentUserName);
-            List<Message> messagePreviews = new ArrayList<>();
-            System.out.println(mesgBoxItems);
-            for (int i = 0; i < mesgBoxItems.size(); i++) {
-                System.out.println("inside loop");
-                messagePreviews.add(ldChatListRepo.getLatestMessage(mesgBoxItems.get(i)));
+            if(temp1.getMesgId()<temp2.getMesgId()){
+                chatList.add(entityToDto(temp2));
             }
-            List<MessageDto> msgPreviewDtos = messagePreviews.stream().map(m -> mapToDto(m))
-                    .collect(Collectors.toList());
-            return msgPreviewDtos;
         }
-        return null;// demeli hec kimle yazismayib
+        return chatList;
     }
 
-    public MessageDto mapToDto(Message mesaj) {
+    public MessageDto entityToDto(Message mesaj) {
         MessageDto mesgDto = new MessageDto();
         mesgDto.setMfrom(mesaj.getMfrom());
         mesgDto.setMbody(mesaj.getMbody());
